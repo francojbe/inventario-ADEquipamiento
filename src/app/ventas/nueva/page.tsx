@@ -14,7 +14,8 @@ import {
     User,
     Contact,
     Building2,
-    CheckCircle
+    CheckCircle,
+    Phone
 } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -41,8 +42,8 @@ export default function NuevaVenta() {
         metodo_pago: 'Efectivo',
         fecha: new Date().toISOString().slice(0, 10), // default: today YYYY-MM-DD
         cliente_nombre: '',
-        cliente_rut: '',
-        cliente_direccion: '',
+        cliente_patente: '',
+        cliente_telefono: '',
     });
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -56,11 +57,11 @@ export default function NuevaVenta() {
 
         let customerId = null;
         try {
-            if (formData.cliente_rut || formData.cliente_nombre) {
+            if (formData.cliente_patente || formData.cliente_nombre) {
                 const { data: existingCustomer } = await supabase
                     .from('glass_customers')
                     .select('id')
-                    .eq('rut', formData.cliente_rut)
+                    .eq('patente', formData.cliente_patente)
                     .maybeSingle();
 
                 if (existingCustomer) {
@@ -70,8 +71,8 @@ export default function NuevaVenta() {
                         .from('glass_customers')
                         .insert([{
                             full_name: formData.cliente_nombre || 'Cliente Genérico',
-                            rut: formData.cliente_rut,
-                            direccion: formData.cliente_direccion
+                            patente: formData.cliente_patente,
+                            telefono: formData.cliente_telefono
                         }])
                         .select('id')
                         .single();
@@ -87,8 +88,8 @@ export default function NuevaVenta() {
             metodo_pago: formData.metodo_pago,
             fecha: new Date(formData.fecha + 'T12:00:00').toISOString(), // noon avoids timezone issues
             cliente_nombre: formData.cliente_nombre,
-            cliente_rut: formData.cliente_rut,
-            cliente_direccion: formData.cliente_direccion,
+            cliente_patente: formData.cliente_patente,
+            cliente_telefono: formData.cliente_telefono,
             customer_id: customerId
         }]);
 
@@ -233,24 +234,24 @@ export default function NuevaVenta() {
                             </div>
 
                             <div className="space-y-1">
-                                <Label icon="Contact" title="RUT" />
+                                <Label icon="Car" title="Patente" />
                                 <input
                                     type="text"
-                                    placeholder="12.345.678-9"
-                                    value={formData.cliente_rut}
-                                    onChange={(e) => setFormData({ ...formData, cliente_rut: e.target.value })}
+                                    placeholder="ABCD12"
+                                    value={formData.cliente_patente}
+                                    onChange={(e) => setFormData({ ...formData, cliente_patente: e.target.value })}
                                     className="w-full h-10 bg-white border border-gray-200 rounded-lg p-3 text-gray-900 font-bold focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all shadow-sm text-sm"
                                 />
                             </div>
 
                             <div className="space-y-1">
-                                <Label icon="MapPin" title="Dirección" />
-                                <textarea
-                                    placeholder="Av. Las Condes 1234..."
-                                    rows={3}
-                                    value={formData.cliente_direccion}
-                                    onChange={(e) => setFormData({ ...formData, cliente_direccion: e.target.value })}
-                                    className="w-full bg-white border border-gray-200 rounded-lg p-3 text-gray-900 font-bold focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all shadow-sm text-sm resize-none"
+                                <Label icon="Phone" title="Teléfono" />
+                                <input
+                                    type="text"
+                                    placeholder="+56 9..."
+                                    value={formData.cliente_telefono}
+                                    onChange={(e) => setFormData({ ...formData, cliente_telefono: e.target.value })}
+                                    className="w-full h-10 bg-white border border-gray-200 rounded-lg p-3 text-gray-900 font-bold focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all shadow-sm text-sm"
                                 />
                             </div>
                         </div>
@@ -281,7 +282,7 @@ export default function NuevaVenta() {
 
 function Label({ icon, title }: { icon: string, title: string }) {
     const IconMap: Record<string, any> = {
-        Briefcase, MapPin, Banknote, CreditCard, User, Building2, Contact
+        Briefcase, MapPin, Banknote, CreditCard, User, Building2, Contact, Phone, Car
     };
     const Icon = IconMap[icon] || Briefcase;
     return (

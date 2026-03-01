@@ -97,7 +97,7 @@ export async function POST(req: NextRequest) {
         ws.addRow([]); // spacer
 
         // ── COLUMN HEADERS ─────────────────────────────────────────────
-        const headers = ['#', 'Fecha', 'Tipo de Vidrio', 'Posición', 'Cliente', 'RUT', 'Dirección', 'Método de Pago', 'Monto (CLP)'];
+        const headers = ['#', 'Fecha', 'Tipo de Vidrio', 'Posición', 'Cliente', 'Patente', 'Teléfono', 'Método de Pago', 'Monto (CLP)'];
         const headerRow = ws.addRow(headers);
         headerRow.height = 22;
         headerRow.eachCell((cell) => {
@@ -117,8 +117,8 @@ export async function POST(req: NextRequest) {
                 inst.tipo_vidrio || '',
                 inst.posicion || '',
                 inst.cliente_nombre || 'Particular',
-                inst.cliente_rut || 'N/A',
-                inst.cliente_direccion || 'N/A',
+                inst.cliente_patente || 'N/A',
+                inst.cliente_telefono || 'N/A',
                 inst.metodo_pago || '',
                 Number(inst.monto) || 0,
             ]);

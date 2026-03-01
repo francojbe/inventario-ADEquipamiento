@@ -229,7 +229,7 @@ export default function HistorialVentas() {
                                                 <span className="font-bold text-gray-900">{inst.cliente_nombre || 'Particular'}</span>
                                                 <span className="text-[10px] text-gray-400 uppercase font-medium">
                                                     {inst.posicion}
-                                                    {inst.cliente_rut ? ` · ${inst.cliente_rut}` : ''}
+                                                    {inst.cliente_patente ? ` · Patente: ${inst.cliente_patente}` : ''}
                                                 </span>
                                             </div>
                                         </TableCell>
