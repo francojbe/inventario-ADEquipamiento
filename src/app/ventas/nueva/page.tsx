@@ -28,8 +28,8 @@ import {
 } from "@/components/ui/select";
 
 const GLASS_TYPES = ['Parabrisas', 'Luneta', 'Vidrio Puerta', 'Lateral', 'Aleta'];
-const POSITIONS = ['Delantero Derecho', 'Delantero Izquierdo', 'Trasero Izquierdo', 'Trasero Derecho'];
-const PAYMENT_METHODS = ['Efectivo', 'Tarjeta', 'Transferencia'];
+const POSITIONS = ['Delantero Derecho', 'Delantero Izquierdo', 'Trasero Izquierdo', 'Trasero Derecho', 'Central'];
+const PAYMENT_METHODS = ['Efectivo', 'Débito', 'Crédito', 'Transferencia'];
 
 export default function NuevaVenta() {
     const router = useRouter();
