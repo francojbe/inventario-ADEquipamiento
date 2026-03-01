@@ -1,6 +1,16 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
+function getBaseUrl(request: NextRequest): string {
+    const forwardedHost = request.headers.get('x-forwarded-host')
+    const forwardedProto = request.headers.get('x-forwarded-proto') || 'https'
+    if (forwardedHost) {
+        return `${forwardedProto}://${forwardedHost}`
+    }
+    const { protocol, host } = request.nextUrl
+    return `${protocol}//${host}`
+}
+
 export async function middleware(request: NextRequest) {
     let supabaseResponse = NextResponse.next({ request })
 
@@ -25,24 +35,24 @@ export async function middleware(request: NextRequest) {
 
     const { data: { user } } = await supabase.auth.getUser()
 
-    const isLoginPage = request.nextUrl.pathname === '/login'
-    const isPublic = request.nextUrl.pathname.startsWith('/_next') ||
-        request.nextUrl.pathname.startsWith('/api') ||
-        request.nextUrl.pathname === '/favicon.ico' ||
-        request.nextUrl.pathname === '/logo.webp'
+    const { pathname } = request.nextUrl
+    const isLoginPage = pathname === '/login'
+    const isPublic =
+        pathname.startsWith('/_next') ||
+        pathname.startsWith('/api') ||
+        pathname === '/favicon.ico' ||
+        pathname === '/logo.webp'
 
     if (isPublic) return supabaseResponse
 
     if (!user && !isLoginPage) {
-        const url = request.nextUrl.clone()
-        url.pathname = '/login'
-        return NextResponse.redirect(url)
+        const baseUrl = getBaseUrl(request)
+        return NextResponse.redirect(`${baseUrl}/login`)
     }
 
     if (user && isLoginPage) {
-        const url = request.nextUrl.clone()
-        url.pathname = '/'
-        return NextResponse.redirect(url)
+        const baseUrl = getBaseUrl(request)
+        return NextResponse.redirect(`${baseUrl}/`)
     }
 
     return supabaseResponse
