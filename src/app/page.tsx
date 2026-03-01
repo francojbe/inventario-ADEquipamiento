@@ -97,7 +97,7 @@ export default async function Home() {
   };
 
   return (
-    <div className="flex flex-col lg:h-full gap-2 animate-in fade-in lg:overflow-hidden">
+    <div className="flex flex-col lg:h-full gap-2 animate-in fade-in pb-4">
       {/* Header */}
       <div className="flex-shrink-0 flex items-center justify-between">
         <div className="flex items-center gap-3">

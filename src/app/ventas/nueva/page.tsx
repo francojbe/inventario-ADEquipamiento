@@ -114,7 +114,7 @@ export default function NuevaVenta() {
     }
 
     return (
-        <div className="flex flex-col lg:h-full overflow-x-hidden lg:overflow-hidden gap-2 animate-in fade-in">
+        <div className="flex flex-col lg:h-full overflow-x-hidden gap-2 animate-in fade-in pb-4">
 
             {/* Navigation */}
             <Link href="/ventas" className="inline-flex items-center gap-1.5 text-gray-400 hover:text-gray-700 transition-colors flex-shrink-0">
