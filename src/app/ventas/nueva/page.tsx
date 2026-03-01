@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/select";
 
 const GLASS_TYPES = ['Parabrisas', 'Luneta', 'Vidrio Puerta', 'Lateral', 'Aleta'];
-const POSITIONS = ['Piloto', 'Copiloto', 'Trasero Izq', 'Trasero Der', 'Central'];
+const POSITIONS = ['Delantero Derecho', 'Delantero Izquierdo', 'Trasero Izquierdo', 'Trasero Derecho'];
 const PAYMENT_METHODS = ['Efectivo', 'Tarjeta', 'Transferencia'];
 
 export default function NuevaVenta() {
