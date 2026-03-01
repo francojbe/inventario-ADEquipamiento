@@ -23,8 +23,8 @@ export default async function RootLayout({
   const cookieStore = await cookies();
   const collapsed = cookieStore.get('glass_sidebar_collapsed')?.value === 'true';
   const headersList = await headers();
-  const pathname = headersList.get('x-invoke-path') || '';
-  const isLoginPage = pathname.startsWith('/login');
+  const pathname = headersList.get('x-pathname') || '';
+  const isLoginPage = pathname === '/login';
 
   return (
     <html lang="es">
