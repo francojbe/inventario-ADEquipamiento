@@ -34,6 +34,10 @@ export default function HistorialVentas() {
     const [dateFrom, setDateFrom] = useState(() => searchParams.get('from') || '');
     const [dateTo, setDateTo] = useState(() => searchParams.get('to') || '');
 
+    // Deletion confirmation state
+    const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+    const [isDeleting, setIsDeleting] = useState(false);
+
     useEffect(() => { fetchInstallations(); }, []);
     useEffect(() => { applyFilters(); }, [categoryFilter, dateFrom, dateTo, installations]);
 
@@ -66,15 +70,21 @@ export default function HistorialVentas() {
 
     const resetFilters = () => { setCategoryFilter('Todos'); setDateFrom(''); setDateTo(''); };
 
-    const handleDelete = async (id: string) => {
-        if (confirm("¿Estás seguro de que deseas eliminar esta venta?")) {
-            const { error } = await supabase.from('glass_installations').delete().eq('id', id);
-            if (error) toast.error("Error al eliminar: " + error.message);
-            else {
-                toast.success("Venta eliminada correctamente");
-                fetchInstallations();
-            }
+    const handleDelete = async () => {
+        if (!confirmDeleteId) return;
+
+        setIsDeleting(true);
+        const { error } = await supabase.from('glass_installations').delete().eq('id', confirmDeleteId);
+
+        if (error) {
+            toast.error("Error al eliminar: " + error.message);
+        } else {
+            toast.success("Venta eliminada correctamente");
+            fetchInstallations();
         }
+
+        setIsDeleting(false);
+        setConfirmDeleteId(null);
     };
 
     const exportToExcel = async () => {
@@ -265,7 +275,7 @@ export default function HistorialVentas() {
                                                     </Button>
                                                 </Link>
                                                 <Button
-                                                    onClick={() => handleDelete(inst.id)}
+                                                    onClick={() => setConfirmDeleteId(inst.id)}
                                                     variant="ghost" size="sm" className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
                                                 >
                                                     <Trash2 className="h-4 w-4" />
@@ -349,6 +359,44 @@ export default function HistorialVentas() {
                     )}
                 </CardContent>
             </Card>
+
+            {/* ── Custom Confirmation Modal ────────────────────────────── */}
+            {confirmDeleteId && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 animate-in fade-in duration-200">
+                    <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={() => !isDeleting && setConfirmDeleteId(null)} />
+                    <Card className="relative w-full max-w-[400px] border-0 shadow-2xl animate-in zoom-in-95 duration-200 overflow-hidden">
+                        <div className="absolute top-0 left-0 w-full h-1 bg-red-500" />
+                        <CardHeader className="pt-6">
+                            <div className="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center text-red-500 mb-4 mx-auto">
+                                <Trash2 className="w-6 h-6" />
+                            </div>
+                            <CardTitle className="text-center text-lg font-black tracking-tight uppercase">¿Eliminar Registro?</CardTitle>
+                            <CardDescription className="text-center font-medium">
+                                Esta acción no se puede deshacer. La venta será eliminada permanentemente de la base de datos.
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent className="flex gap-3 pb-6 px-6">
+                            <Button
+                                variant="outline"
+                                className="flex-1 font-bold border-gray-200 h-10 uppercase text-[11px]"
+                                onClick={() => setConfirmDeleteId(null)}
+                                disabled={isDeleting}
+                            >
+                                Cancelar
+                            </Button>
+                            <Button
+                                className="flex-1 bg-red-600 hover:bg-red-700 text-white font-black h-10 uppercase text-[11px] shadow-lg shadow-red-100"
+                                onClick={handleDelete}
+                                disabled={isDeleting}
+                            >
+                                {isDeleting ? (
+                                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                ) : "Sí, Eliminar"}
+                            </Button>
+                        </CardContent>
+                    </Card>
+                </div>
+            )}
         </div>
     );
 }
