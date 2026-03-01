@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "AD Equipamiento Automotriz | Sistema de Gestión",
-  description: "Sistema de Control de Instalación de Vidrios Automotrices - AD Equipamiento Automotriz",
+  description: "Sistema de Control de Ventas de Vidrios Automotrices - AD Equipamiento Automotriz",
   icons: {
     icon: '/logo.webp',
     apple: '/logo.webp',

@@ -21,7 +21,7 @@ import {
 const GLASS_TYPES = ['Todos', 'Parabrisas', 'Luneta', 'Vidrio Puerta', 'Lateral', 'Aleta'];
 const PAGE_SIZE = 15;
 
-export default function InstallationsHistory() {
+export default function HistorialVentas() {
     const searchParams = useSearchParams();
     const [installations, setInstallations] = useState<any[]>([]);
     const [filteredData, setFilteredData] = useState<any[]>([]);
@@ -112,7 +112,7 @@ export default function InstallationsHistory() {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-3">
                 <div>
                     <h1 className="text-2xl font-black tracking-tighter text-gray-900 uppercase">Historial de Ventas</h1>
-                    <p className="text-gray-400 font-medium text-sm">Gestiona y exporta tus registros de instalaciones.</p>
+                    <p className="text-gray-400 font-medium text-sm">Gestiona y exporta tus registros de ventas.</p>
                 </div>
                 <Button
                     onClick={exportToExcel}

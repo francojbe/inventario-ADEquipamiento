@@ -30,7 +30,7 @@ const GLASS_TYPES = ['Parabrisas', 'Luneta', 'Vidrio Puerta', 'Lateral', 'Aleta'
 const POSITIONS = ['Piloto', 'Copiloto', 'Trasero Izq', 'Trasero Der', 'Central'];
 const PAYMENT_METHODS = ['Efectivo', 'Tarjeta', 'Transferencia'];
 
-export default function NewInstallation() {
+export default function NuevaVenta() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -117,7 +117,7 @@ export default function NewInstallation() {
         <div className="flex flex-col lg:h-full overflow-x-hidden lg:overflow-hidden gap-2 animate-in fade-in">
 
             {/* Navigation */}
-            <Link href="/" className="inline-flex items-center gap-1.5 text-gray-400 hover:text-gray-700 transition-colors flex-shrink-0">
+            <Link href="/ventas" className="inline-flex items-center gap-1.5 text-gray-400 hover:text-gray-700 transition-colors flex-shrink-0">
                 <ChevronLeft className="w-4 h-4" />
                 <span className="text-xs font-bold uppercase tracking-widest">Volver</span>
             </Link>
@@ -125,7 +125,7 @@ export default function NewInstallation() {
             {/* Title */}
             <div className="flex-shrink-0">
                 <h1 className="text-2xl font-black text-gray-900 tracking-tighter uppercase leading-none">NUEVA VENTA</h1>
-                <p className="text-gray-400 font-medium text-sm">Registro de instalación o servicio</p>
+                <p className="text-gray-400 font-medium text-sm">Registro de venta o servicio</p>
             </div>
 
             {/* Form */}

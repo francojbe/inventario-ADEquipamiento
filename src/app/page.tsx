@@ -130,7 +130,7 @@ export default async function Home() {
               <div className="text-xl font-black text-gray-900 tracking-tighter leading-none">{formatCurrency(dailyTotal)}</div>
             </div>
             <Sparkline data={getSparklineData(7)} color="#10b981" />
-            <Link href={`/installations?from=${todayStr}&to=${todayStr}`}>
+            <Link href={`/ventas?from=${todayStr}&to=${todayStr}`}>
               <Button variant="ghost" className="w-full h-6 text-[9px] font-black text-emerald-600 hover:bg-emerald-50 hover:text-emerald-700 uppercase gap-1 p-0">
                 <ExternalLink className="h-2.5 w-2.5" /> Ver Hoy
               </Button>
@@ -152,7 +152,7 @@ export default async function Home() {
               <div className="text-xl font-black text-gray-900 tracking-tighter leading-none">{formatCurrency(weeklyTotal)}</div>
             </div>
             <Sparkline data={getSparklineData(14)} color="#2563eb" />
-            <Link href={`/installations?from=${sevenDaysAgoStr}&to=${todayStr}`}>
+            <Link href={`/ventas?from=${sevenDaysAgoStr}&to=${todayStr}`}>
               <Button variant="ghost" className="w-full h-6 text-[9px] font-black text-blue-600 hover:bg-blue-50 hover:text-blue-700 uppercase gap-1 p-0">
                 <ExternalLink className="h-2.5 w-2.5" /> Ver Semana
               </Button>
@@ -174,7 +174,7 @@ export default async function Home() {
               <div className="text-xl font-black text-gray-900 tracking-tighter leading-none">{formatCurrency(monthlyTotal)}</div>
             </div>
             <Sparkline data={getSparklineData(30)} color="#9333ea" />
-            <Link href={`/installations?from=${monthStartStr}&to=${todayStr}`}>
+            <Link href={`/ventas?from=${monthStartStr}&to=${todayStr}`}>
               <Button variant="ghost" className="w-full h-6 text-[9px] font-black text-purple-600 hover:bg-purple-50 hover:text-purple-700 uppercase gap-1 p-0">
                 <ExternalLink className="h-2.5 w-2.5" /> Ver Mes
               </Button>
@@ -231,7 +231,7 @@ export default async function Home() {
                 <h3 className="text-sm font-black uppercase tracking-tight leading-none mb-0.5">Nueva Venta</h3>
                 <p className="text-blue-200 text-[9px] font-medium uppercase leading-none">Registro Rápido</p>
               </div>
-              <Link href="/installations/new" className="block w-full">
+              <Link href="/ventas/nueva" className="block w-full">
                 <Button className="w-full bg-white text-blue-600 hover:bg-blue-50 font-black h-7 text-[10px] uppercase">
                   EMPEZAR
                 </Button>

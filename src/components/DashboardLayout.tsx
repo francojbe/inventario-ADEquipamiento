@@ -53,8 +53,8 @@ export function DashboardLayout({ children, defaultCollapsed = false }: { childr
 
     const navigation = [
         { name: 'Dashboard', href: '/', icon: LayoutDashboard },
-        { name: 'Nueva Venta', href: '/installations/new', icon: Hammer },
-        { name: 'Historial de Ventas', href: '/installations', icon: Search },
+        { name: 'Nueva Venta', href: '/ventas/nueva', icon: Hammer },
+        { name: 'Historial de Ventas', href: '/ventas', icon: Search },
         { name: 'Stock (PRO)', href: '/inventory', icon: Package },
         { name: 'Clientes (PRO)', href: '/customers', icon: Users },
     ];
