@@ -203,9 +203,15 @@ export default async function Home() {
                 </div>
               </div>
               <div>
-                <span className="text-[8px] font-black text-gray-400 uppercase leading-none block">Tarjeta Hoy</span>
+                <span className="text-[8px] font-black text-gray-400 uppercase leading-none block">Débito Hoy</span>
                 <div className="text-xs font-black text-gray-800">
-                  {formatCurrency(recent.filter(i => new Date(i.fecha) >= todayStart && i.metodo_pago === 'Tarjeta').reduce((s, i) => s + Number(i.monto), 0))}
+                  {formatCurrency(recent.filter(i => new Date(i.fecha) >= todayStart && i.metodo_pago === 'Débito').reduce((s, i) => s + Number(i.monto), 0))}
+                </div>
+              </div>
+              <div>
+                <span className="text-[8px] font-black text-gray-400 uppercase leading-none block">Crédito Hoy</span>
+                <div className="text-xs font-black text-gray-800">
+                  {formatCurrency(recent.filter(i => new Date(i.fecha) >= todayStart && i.metodo_pago === 'Crédito').reduce((s, i) => s + Number(i.monto), 0))}
                 </div>
               </div>
               <div>

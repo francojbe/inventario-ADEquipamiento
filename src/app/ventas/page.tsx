@@ -18,6 +18,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { toast } from "sonner";
 
 const GLASS_TYPES = ['Todos', 'Parabrisas', 'Luneta', 'Vidrio Puerta', 'Lateral', 'Aleta'];
 const PAGE_SIZE = 15;
@@ -68,8 +69,11 @@ export default function HistorialVentas() {
     const handleDelete = async (id: string) => {
         if (confirm("¿Estás seguro de que deseas eliminar esta venta?")) {
             const { error } = await supabase.from('glass_installations').delete().eq('id', id);
-            if (error) alert("Error al eliminar: " + error.message);
-            else fetchInstallations();
+            if (error) toast.error("Error al eliminar: " + error.message);
+            else {
+                toast.success("Venta eliminada correctamente");
+                fetchInstallations();
+            }
         }
     };
 
@@ -90,7 +94,10 @@ export default function HistorialVentas() {
             a.download = match ? match[1] : `AD_Reporte_${new Date().toISOString().slice(0, 10)}.xlsx`;
             a.click();
             URL.revokeObjectURL(url);
-        } catch { alert('Error al exportar. Por favor intenta de nuevo.'); }
+            toast.success("Reporte exportado correctamente");
+        } catch {
+            toast.error('Error al exportar. Por favor intenta de nuevo.');
+        }
     };
 
     const formatCurrency = (v: number) => '$' + Math.round(v).toLocaleString('es-CL');

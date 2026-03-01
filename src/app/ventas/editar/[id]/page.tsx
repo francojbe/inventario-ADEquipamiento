@@ -27,6 +27,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { toast } from "sonner";
 
 const GLASS_TYPES = ['Parabrisas', 'Luneta', 'Vidrio Puerta', 'Lateral', 'Aleta'];
 const POSITIONS = ['Delantero Derecho', 'Delantero Izquierdo', 'Trasero Izquierdo', 'Trasero Derecho', 'Central'];
@@ -64,7 +65,7 @@ export default function EditarVenta() {
             .single();
 
         if (error) {
-            alert("Error al cargar la venta: " + error.message);
+            toast.error("Error al cargar la venta: " + error.message);
             router.push('/ventas');
             return;
         }
@@ -88,7 +89,7 @@ export default function EditarVenta() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!formData.tipo_vidrio || !formData.posicion || !formData.monto) {
-            alert("Por favor completa todos los campos");
+            toast.error("Por favor completa todos los campos obligatorios");
             return;
         }
 
@@ -123,9 +124,10 @@ export default function EditarVenta() {
 
         if (!error) {
             setSuccess(true);
+            toast.success("Cambios guardados correctamente");
             setTimeout(() => router.push('/ventas'), 1500);
         } else {
-            alert("Error al guardar: " + error.message);
+            toast.error("Error al guardar: " + error.message);
             setSaving(false);
         }
     };

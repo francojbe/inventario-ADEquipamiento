@@ -26,6 +26,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { toast } from "sonner";
 
 const GLASS_TYPES = ['Parabrisas', 'Luneta', 'Vidrio Puerta', 'Lateral', 'Aleta'];
 const POSITIONS = ['Delantero Derecho', 'Delantero Izquierdo', 'Trasero Izquierdo', 'Trasero Derecho', 'Central'];
@@ -49,7 +50,7 @@ export default function NuevaVenta() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!formData.tipo_vidrio || !formData.posicion || !formData.monto) {
-            alert("Por favor completa todos los campos");
+            toast.error("Por favor completa todos los campos obligatorios");
             return;
         }
 
@@ -95,9 +96,10 @@ export default function NuevaVenta() {
 
         if (!error) {
             setSuccess(true);
+            toast.success("Venta registrada correctamente");
             setTimeout(() => router.push('/'), 1500);
         } else {
-            alert("Error al guardar: " + error.message);
+            toast.error("Error al guardar: " + error.message);
             setLoading(false);
         }
     };

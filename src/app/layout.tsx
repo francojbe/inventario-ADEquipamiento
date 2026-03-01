@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { cookies, headers } from "next/headers";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,6 +37,7 @@ export default async function RootLayout({
             {children}
           </DashboardLayout>
         )}
+        <Toaster richColors closeButton position="top-right" />
       </body>
     </html>
   );
