@@ -8,7 +8,8 @@ import { supabase } from '@/lib/supabase';
 import { format, isWithinInterval, startOfDay, endOfDay, parseISO } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { Badge } from "@/components/ui/badge";
-import { Calendar as CalendarIcon, Download, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Calendar as CalendarIcon, Download, X, ChevronLeft, ChevronRight, Pencil, Trash2 } from 'lucide-react';
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
     Select,
@@ -63,6 +64,14 @@ export default function HistorialVentas() {
     };
 
     const resetFilters = () => { setCategoryFilter('Todos'); setDateFrom(''); setDateTo(''); };
+
+    const handleDelete = async (id: string) => {
+        if (confirm("¿Estás seguro de que deseas eliminar esta venta?")) {
+            const { error } = await supabase.from('glass_installations').delete().eq('id', id);
+            if (error) alert("Error al eliminar: " + error.message);
+            else fetchInstallations();
+        }
+    };
 
     const exportToExcel = async () => {
         try {
@@ -196,7 +205,8 @@ export default function HistorialVentas() {
                                     <TableHead className="font-black text-gray-400 uppercase text-[10px] tracking-widest">Tipo</TableHead>
                                     <TableHead className="font-black text-gray-400 uppercase text-[10px] tracking-widest">Cliente</TableHead>
                                     <TableHead className="font-black text-gray-400 uppercase text-[10px] tracking-widest text-right">Monto</TableHead>
-                                    <TableHead className="font-black text-gray-400 uppercase text-[10px] tracking-widest pr-5 text-center">Pago</TableHead>
+                                    <TableHead className="font-black text-gray-400 uppercase text-[10px] tracking-widest text-center">Pago</TableHead>
+                                    <TableHead className="font-black text-gray-400 uppercase text-[10px] tracking-widest pr-5 text-right w-[100px]">Acciones</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -237,8 +247,23 @@ export default function HistorialVentas() {
                                         <TableCell className="text-right font-black text-gray-900 text-base pr-3">
                                             {formatCurrency(inst.monto)}
                                         </TableCell>
-                                        <TableCell className="pr-5 text-center">
+                                        <TableCell className="text-center">
                                             {getPaymentBadge(inst.metodo_pago)}
+                                        </TableCell>
+                                        <TableCell className="pr-5 text-right">
+                                            <div className="flex items-center justify-end gap-2">
+                                                <Link href={`/ventas/editar/${inst.id}`}>
+                                                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-blue-600 hover:text-blue-700 hover:bg-blue-50">
+                                                        <Pencil className="h-4 w-4" />
+                                                    </Button>
+                                                </Link>
+                                                <Button
+                                                    onClick={() => handleDelete(inst.id)}
+                                                    variant="ghost" size="sm" className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
+                                                >
+                                                    <Trash2 className="h-4 w-4" />
+                                                </Button>
+                                            </div>
                                         </TableCell>
                                     </TableRow>
                                 ))}
