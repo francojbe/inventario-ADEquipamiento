@@ -20,8 +20,8 @@ interface SparklineProps {
 
 export function Sparkline({ data, color }: SparklineProps) {
     return (
-        <div className="h-10 w-full min-w-[100px]">
-            <ResponsiveContainer width="100%" height="100%">
+        <div className="h-10 w-full min-w-[100px] relative">
+            <ResponsiveContainer width="100%" height="100%" minWidth={100} minHeight={40}>
                 <AreaChart data={data}>
                     <defs>
                         <linearGradient id={`gradient-${color.replace('#', '')}`} x1="0" y1="0" x2="0" y2="1">
@@ -72,9 +72,9 @@ export function MainChart({ data }: MainChartProps) {
     const maxVal = Math.max(...data.map(d => d.total));
 
     return (
-        <div className="h-full w-full">
-            <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={data} margin={{ top: 4, right: 4, left: -24, bottom: 0 }} barCategoryGap="25%">
+        <div className="h-full w-full min-h-[150px] relative">
+            <ResponsiveContainer width="100%" height="100%" minHeight={150}>
+                <BarChart data={data} margin={{ top: 8, right: 8, left: -24, bottom: -8 }} barCategoryGap="25%">
                     <CartesianGrid
                         vertical={false}
                         stroke="#f1f5f9"
